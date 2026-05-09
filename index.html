@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Ali — CS Student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060912;
+  --bg2: #0b1020;
+  --card: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --border-accent: rgba(99,102,241,0.35);
+  --purple: #6366f1;
+  --purple-light: #818cf8;
+  --cyan: #22d3ee;
+  --green: #4ade80;
+  --orange: #fb923c;
+  --white: #f1f5f9;
+  --gray: #94a3b8;
+  --gray-dim: #475569;
+  --font: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 6%;
+  background: rgba(6,9,18,0.7);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 14px 6%; }
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--purple-light);
+  letter-spacing: 0.5px;
+}
+.nav-logo span { color: var(--cyan); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.hamburger span {
+  width: 24px; height: 2px;
+  background: var(--gray);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 800px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    position: fixed;
+    top: 0; right: -100%;
+    height: 100vh;
+    width: 260px;
+    background: var(--bg2);
+    border-left: 1px solid var(--border);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    transition: right 0.35s ease;
+  }
+  .nav-links.open { right: 0; }
+  .nav-links a { font-size: 1.05rem; }
+}
+
+/* ── HERO ── */
+#home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 6% 80px;
+  position: relative;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 780px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--cyan);
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--cyan);
+}
+
+.hero-name {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.hero-name em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--purple-light), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-role {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  color: var(--gray);
+  margin-bottom: 28px;
+}
+
+.hero-bio {
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: var(--gray);
+  line-height: 1.8;
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+.hero-bio strong { color: var(--white); font-weight: 600; }
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 52px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font);
+}
+.btn-solid {
+  background: var(--purple);
+  color: #fff;
+}
+.btn-solid:hover { background: var(--purple-light); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--border-accent);
+}
+.btn-outline:hover {
+  border-color: var(--purple-light);
+  background: rgba(99,102,241,0.08);
+  transform: translateY(-1px);
+}
+
+.hero-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.hero-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.hero-link:hover { color: var(--white); }
+.hero-link svg { opacity: 0.7; }
+.hero-link:hover svg { opacity: 1; }
+
+.hero-stack {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.hero-stack-label {
+  font-size: 0.75rem;
+  color: var(--gray-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: var(--mono);
+  margin-bottom: 16px;
+}
+.hero-stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.stack-chip {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--gray);
+}
+
+/* ── SECTION BASE ── */
+section {
+  padding: clamp(70px, 9vw, 120px) 6%;
+  position: relative;
+}
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--purple-light);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1.15;
+}
+.section-sub {
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  color: var(--gray);
+  line-height: 1.8;
+  max-width: 600px;
+}
+.container { max-width: 1180px; margin: 0 auto; }
+
+/* ── ABOUT ── */
+#about { background: var(--bg2); }
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  .about-layout { grid-template-columns: 1fr; gap: 48px; }
+}
+
+.about-text p {
+  font-size: 1rem;
+  color: var(--gray);
+  line-height: 1.85;
+  margin-bottom: 18px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+.about-text strong { color: var(--white); font-weight: 600; }
+.about-text a { color: var(--cyan); text-decoration: none; }
+.about-text a:hover { text-decoration: underline; }
+
+.about-side {}
+
+.fact-list {
+  list-style: none;
+  margin-bottom: 32px;
+}
+.fact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.fact-list li:first-child { border-top: 1px solid var(--border); }
+.fact-key {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 90px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.fact-val { color: var(--white); font-weight: 500; }
+
+.about-counters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.counter-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  transition: border-color 0.2s;
+}
+.counter-card:hover { border-color: var(--border-accent); }
+.counter-num {
+  font-family: var(--mono);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--purple-light);
+  line-height: 1;
+}
+.counter-lbl {
+  font-size: 0.72rem;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 6px;
+}
+
+/* ── SKILLS ── */
+#skills { background: var(--bg); }
+
+.skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media (max-width: 720px) { .skills-layout { grid-template-columns: 1fr; gap: 40px; } }
+
+.skill-group-title {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cyan);
+  margin-bottom: 24px;
+}
+
+.skill-item { margin-bottom: 20px; }
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.skill-name { font-size: 0.9rem; font-weight: 500; color: var(--white); }
+.skill-pct {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--gray-dim);
+}
+.skill-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  border-radius: 4px;
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+}
+
+.tools-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 36px;
+}
+.tool-tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.2);
+  color: var(--purple-light);
+  transition: all 0.2s;
+}
+.tool-tag:hover {
+  background: rgba(99,102,241,0.15);
+  border-color: var(--purple-light);
+  color: var(--white);
+}
+
+/* ── LEARNING ── */
+#learning { background: var(--bg2); }
+
+.learning-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.learn-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.25s;
+}
+.learn-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-3px);
+  background: rgba(99,102,241,0.04);
+}
+
+.learn-icon {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  display: block;
+}
+.learn-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.learn-desc {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── JOURNEY ── */
+#journey { background: var(--bg); }
+
+.timeline {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 28px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: linear-gradient(180deg, var(--purple), var(--cyan), transparent);
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: all 0.5s ease;
+}
+.tl-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--purple);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--purple);
+}
+
+.tl-year {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--purple-light);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.tl-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.tl-desc {
+  font-size: 0.87rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── EDUCATION ── */
+#education { background: var(--bg2); }
+
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.edu-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px;
+  transition: all 0.25s;
+}
+.edu-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-3px);
+}
+
+.edu-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gray-dim);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.edu-badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  flex-shrink: 0;
+}
+.edu-badge.done::before { background: var(--green); }
+.edu-badge.progress::before { background: var(--orange); }
+
+.edu-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.edu-source {
+  font-size: 0.8rem;
+  color: var(--purple-light);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.edu-desc {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── GOALS ── */
+#goals { background: var(--bg); }
+
+.goals-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media (max-width: 660px) { .goals-layout { grid-template-columns: 1fr; } }
+
+.goal-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.25s;
+}
+.goal-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-3px);
+}
+.goal-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--gray-dim);
+  margin-bottom: 12px;
+}
+.goal-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.goal-desc {
+  font-size: 0.83rem;
+  color: var(--gray);
+  line-height: 1.7;
+}
+
+/* ── CONTACT ── */
+#contact { background: var(--bg2); }
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: start;
+}
+@media (max-width: 780px) { .contact-layout { grid-template-columns: 1fr; gap: 48px; } }
+
+.contact-left p {
+  font-size: 0.95rem;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.contact-links { list-style: none; }
+.contact-links li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.contact-links li:first-child { border-top: 1px solid var(--border); }
+.contact-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.contact-links a:hover { color: var(--cyan); }
+.contact-link-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--gray-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.contact-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+}
+.form-row { margin-bottom: 18px; }
+.form-row label {
+  display: block;
+  font-size: 0.75rem;
+  font-family: var(--mono);
+  color: var(--gray-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.form-row input,
+.form-row textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+}
+.form-row input:focus,
+.form-row textarea:focus { border-color: var(--purple); }
+.form-row textarea { height: 130px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 480px) { .form-grid { grid-template-columns: 1fr; } }
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--purple);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-submit:hover { background: var(--purple-light); transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 40px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: gap;
+  gap: 20px;
+}
+.footer-name {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--gray-dim);
+}
+.footer-note {
+  font-size: 0.8rem;
+  color: var(--gray-dim);
+}
+.footer-socials {
+  display: flex;
+  gap: 16px;
+}
+.footer-socials a {
+  color: var(--gray-dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.2s;
+}
+.footer-socials a:hover { color: var(--white); }
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── SECTION DIVIDER ── */
+.sep {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── STATUS PILL ── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--green);
+  background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 50px;
+  padding: 5px 14px;
+  margin-bottom: 24px;
+}
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ── MOBILE TWEAKS ── */
+@media (max-width: 600px) {
+  #home { padding: 100px 6% 60px; }
+  footer { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">ahmad<span>.</span>dev</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#learning">Learning</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#education">Courses</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Open to collaboration &amp; learning
+    </div>
+
+    <p class="hero-eyebrow">Hi, I'm Ahmad Ali</p>
+
+    <h1 class="hero-name">
+      Building things<br>on the <em>web</em>.
+    </h1>
+
+    <p class="hero-role">17 · CS Student · Gujranwala, Pakistan</p>
+
+    <p class="hero-bio">
+      I'm a first-year computer science student who got into coding because I wanted to make things that actually look good. 
+      Started with HTML and CSS, caught the bug, and haven't stopped since. 
+      Right now I'm focused on <strong>full-stack web development</strong> — learning by building real projects, 
+      breaking things, and figuring out why they broke.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#skills" class="btn btn-solid">See my skills</a>
+      <a href="#contact" class="btn btn-outline">Say hello</a>
+    </div>
+
+    <div class="hero-links">
+      <a href="https://www.linkedin.com/in/ahmad-ali-485161286" class="hero-link" target="_blank">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        LinkedIn
+      </a>
+      <a href="#" class="hero-link" target="_blank">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:ranaahmadali1704@gmail.com" class="hero-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Email
+      </a>
+    </div>
+
+    <div class="hero-stack">
+      <p class="hero-stack-label">Comfortable with</p>
+      <div class="hero-stack-chips">
+        <span class="stack-chip">HTML & CSS</span>
+        <span class="stack-chip">JavaScript</span>
+        <span class="stack-chip">React</span>
+        <span class="stack-chip">Node.js</span>
+        <span class="stack-chip">Git</span>
+        <span class="stack-chip">Python</span>
+        <span class="stack-chip">SQL</span>
+        <span class="stack-chip">Figma</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-layout">
+    <div class="about-text reveal">
+      <span class="section-label">About me</span>
+      <h2 class="section-title">A little about who I am</h2>
+
+      <p>
+        I'm Ahmad, 17, currently in my first year of a <strong>BS Computer Science</strong> degree. 
+        I started messing around with HTML when I was 14 because I wanted to make a website for a 
+        school project that didn't look completely terrible. It spiraled from there.
+      </p>
+      <p>
+        These days I spend most of my free time building web stuff, watching tutorials, and trying to 
+        understand how things actually work under the hood — not just copy-pasting from Stack Overflow 
+        (well, maybe a little). I'm really into <strong>UI design</strong> and think good-looking interfaces 
+        matter just as much as clean code.
+      </p>
+      <p>
+        When I'm not coding I'm either watching football, listening to music, or down a YouTube rabbit hole 
+        about something completely unrelated to CS. I believe <strong>curiosity is the most important skill 
+        in tech</strong> — more than any framework or language.
+      </p>
+      <p>
+        I'm not a professional yet. I'm a student. But I take it seriously, I show up every day, 
+        and I'm getting better at this. That's the honest version.
+      </p>
+    </div>
+
+    <div class="about-side reveal">
+      <ul class="fact-list">
+        <li>
+          <span class="fact-key">Name</span>
+          <span class="fact-val">Ahmad Ali</span>
+        </li>
+        <li>
+          <span class="fact-key">Age</span>
+          <span class="fact-val">17 years old</span>
+        </li>
+        <li>
+          <span class="fact-key">Degree</span>
+          <span class="fact-val">BS Computer Science (Year 1)</span>
+        </li>
+        <li>
+          <span class="fact-key">Location</span>
+          <span class="fact-val">Gujranwala, Pakistan</span>
+        </li>
+        <li>
+          <span class="fact-key">Focus</span>
+          <span class="fact-val">Web development, UI/UX</span>
+        </li>
+        <li>
+          <span class="fact-key">Email</span>
+          <span class="fact-val"><a href="mailto:ranaahmadali1704@gmail.com">ranaahmadali1704@gmail.com</a></span>
+        </li>
+        <li>
+          <span class="fact-key">Status</span>
+          <span class="fact-val" style="color: var(--green)">Studying · Learning · Building</span>
+        </li>
+      </ul>
+
+      <div class="about-counters">
+        <div class="counter-card">
+          <div class="counter-num" data-target="3">0</div>
+          <div class="counter-lbl">Years coding</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-num" data-target="15">0</div>
+          <div class="counter-lbl">Tech learned</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-num" data-target="20">0</div>
+          <div class="counter-lbl">Projects built</div>
+        </div>
+        <div class="counter-card">
+          <div class="counter-num" data-target="500">0</div>
+          <div class="counter-lbl">Hours coded</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="text-center" style="text-align:center; margin-bottom: 52px;" >
+      <span class="section-label">What I know</span>
+      <h2 class="section-title">Technical skills</h2>
+      <p class="section-sub" style="margin: 0 auto;">These are the things I actually use. The percentages are honest — there's plenty I'm still figuring out.</p>
+    </div>
+    <div class="skills-layout reveal">
+      <div>
+        <p class="skill-group-title">Frontend</p>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">HTML & CSS</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">JavaScript</span><span class="skill-pct">72%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="72"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">React.js</span><span class="skill-pct">60%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">Tailwind CSS</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">Figma / UI Design</span><span class="skill-pct">55%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="skill-group-title">Backend &amp; Other</p>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">Node.js & Express</span><span class="skill-pct">55%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">Python</span><span class="skill-pct">50%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="50"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">SQL / MongoDB</span><span class="skill-pct">48%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="48"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">Git & GitHub</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-row"><span class="skill-name">C++ (uni coursework)</span><span class="skill-pct">45%</span></div>
+          <div class="skill-bar"><div class="skill-fill" data-width="45"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-grid reveal" style="max-width:1000px; margin: 40px auto 0;">
+      <span class="tool-tag">VS Code</span>
+      <span class="tool-tag">React</span>
+      <span class="tool-tag">Next.js</span>
+      <span class="tool-tag">Tailwind</span>
+      <span class="tool-tag">Node.js</span>
+      <span class="tool-tag">Express</span>
+      <span class="tool-tag">MongoDB</span>
+      <span class="tool-tag">MySQL</span>
+      <span class="tool-tag">Firebase</span>
+      <span class="tool-tag">Git</span>
+      <span class="tool-tag">Figma</span>
+      <span class="tool-tag">Linux (basics)</span>
+      <span class="tool-tag">Postman</span>
+      <span class="tool-tag">Vercel</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I'M LEARNING -->
+<section id="learning">
+  <div class="container">
+    <div style="margin-bottom: 52px;">
+      <span class="section-label">Right now</span>
+      <h2 class="section-title">What I'm actively learning</h2>
+      <p class="section-sub">Things I'm working through at the moment. Some of these I just started, some I'm halfway through.</p>
+    </div>
+    <div class="learning-grid">
+      <div class="learn-card reveal">
+        <span class="learn-icon">⚛️</span>
+        <h3 class="learn-title">React — going deeper</h3>
+        <p class="learn-desc">I can build with it but I'm pushing past the basics. Working through custom hooks, Context API, and performance patterns like memoization.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🗄️</span>
+        <h3 class="learn-title">Full stack with MERN</h3>
+        <p class="learn-desc">Putting MongoDB, Express, React, and Node together into real apps. Building a small project to understand how all the pieces connect end-to-end.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🧮</span>
+        <h3 class="learn-title">Data Structures & Algorithms</h3>
+        <p class="learn-desc">Doing this both in uni and on LeetCode. Arrays, linked lists, trees — honestly kind of enjoying it even though it's hard.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🐍</span>
+        <h3 class="learn-title">Python for real this time</h3>
+        <p class="learn-desc">Going beyond the basics. Looking at file handling, OOP, and starting to explore what Python can do with data.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🎨</span>
+        <h3 class="learn-title">UI design principles</h3>
+        <p class="learn-desc">Watching design breakdowns on YouTube, practicing in Figma. Trying to understand spacing, typography, and what makes an interface feel right.</p>
+      </div>
+      <div class="learn-card reveal">
+        <span class="learn-icon">🔐</span>
+        <h3 class="learn-title">Auth & security basics</h3>
+        <p class="learn-desc">JWT, bcrypt, session handling — learning how to actually secure a web app instead of just guessing. Uni's security class is helping too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section id="journey">
+  <div class="container">
+    <div style="margin-bottom: 52px;">
+      <span class="section-label">My story</span>
+      <h2 class="section-title">How I got here</h2>
+      <p class="section-sub">A rough timeline of how a school project turned into something I actually care about.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="tl-year">2021 — Age 14</p>
+        <h3 class="tl-title">First lines of HTML</h3>
+        <p class="tl-desc">Made a basic webpage for a school project using a YouTube tutorial. It was ugly. But it worked, and I thought that was the coolest thing. Started messing around with CSS right after.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2022 — Age 15</p>
+        <h3 class="tl-title">Actually learning JavaScript</h3>
+        <p class="tl-desc">Went through a full JavaScript course on Udemy. This is when things clicked — understanding that you could make things interactive and respond to users. Built some small games and form validators.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2023 — Age 16</p>
+        <h3 class="tl-title">First real projects & React</h3>
+        <p class="tl-desc">Built a few landing pages and portfolio-style sites. Started learning React and Node.js. Started to understand the difference between "making it work" and "making it good."</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">2024 — Age 17</p>
+        <h3 class="tl-title">University started</h3>
+        <p class="tl-desc">Got into a BSCS degree. Proper computer science — algorithms, data structures, databases, C++. It's a different kind of hard than web dev. But it's filling in a lot of gaps.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-year">Now</p>
+        <h3 class="tl-title">Building, studying, growing</h3>
+        <p class="tl-desc">Balancing uni coursework with personal projects. Getting better every month. Hoping to do an internship in the next year or two and eventually build something people actually use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & COURSES -->
+<section id="education">
+  <div class="container">
+    <div style="margin-bottom: 52px;">
+      <span class="section-label">Education</span>
+      <h2 class="section-title">Courses & study</h2>
+      <p class="section-sub">Formal education plus the online stuff I've worked through. This is the actual list, not a curated one.</p>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <p class="edu-badge progress">In progress</p>
+        <h3 class="edu-title">BS Computer Science</h3>
+        <p class="edu-source">University — Year 1</p>
+        <p class="edu-desc">Core CS: algorithms, data structures, OOP in C++, discrete math, databases. The theory behind everything I've been doing by instinct.</p>
+      </div>
+      <div class="edu-card reveal">
+        <p class="edu-badge done">Completed</p>
+        <h3 class="edu-title">The Web Developer Bootcamp</h3>
+        <p class="edu-source">Colt Steele — Udemy</p>
+        <p class="edu-desc">Went through the whole thing. HTML, CSS, JS, Node.js, Express, MongoDB. This is what got me into full-stack properly.</p>
+      </div>
+      <div class="edu-card reveal">
+        <p class="edu-badge progress">In progress</p>
+        <h3 class="edu-title">React — The Complete Guide</h3>
+        <p class="edu-source">Maximilian Schwarzmüller — Udemy</p>
+        <p class="edu-desc">Going deep on React. Hooks, Redux, Next.js basics. About 60% through. Takes time but worth it.</p>
+      </div>
+      <div class="edu-card reveal">
+        <p class="edu-badge done">Completed</p>
+        <h3 class="edu-title">CS50's Introduction to Computer Science</h3>
+        <p class="edu-source">Harvard — edX (free)</p>
+        <p class="edu-desc">Did this before university. The problem sets are brutal in the best way. Really changed how I think about coding.</p>
+      </div>
+      <div class="edu-card reveal">
+        <p class="edu-badge progress">Ongoing</p>
+        <h3 class="edu-title">DSA Practice</h3>
+        <p class="edu-source">LeetCode + NeetCode</p>
+        <p class="edu-desc">Slowly working through problems. Not the most exciting thing but I can already feel it making me a better thinker.</p>
+      </div>
+      <div class="edu-card reveal">
+        <p class="edu-badge">Starting soon</p>
+        <h3 class="edu-title">Introduction to Machine Learning</h3>
+        <p class="edu-source">Andrew Ng — Coursera</p>
+        <p class="edu-desc">Curious about ML. Plan to do this over the next few months once I solidify my Python enough to actually follow along.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS -->
+<section id="goals">
+  <div class="container">
+    <div style="margin-bottom: 52px;">
+      <span class="section-label">Where I'm headed</span>
+      <h2 class="section-title">Goals & what I'm working toward</h2>
+      <p class="section-sub">Some short-term, some long-term. Writing these down keeps me honest.</p>
+    </div>
+    <div class="goals-layout">
+      <div class="goal-card reveal">
+        <p class="goal-num">— Short term</p>
+        <h3 class="goal-title">Get comfortable with full-stack</h3>
+        <p class="goal-desc">Build 2–3 real full-stack projects I'm proud of. Something with auth, a database, a proper backend — not just a static site.</p>
+      </div>
+      <div class="goal-card reveal">
+        <p class="goal-num">— Short term</p>
+        <h3 class="goal-title">Land my first internship</h3>
+        <p class="goal-desc">Within the next year or two. Doesn't have to be a big company — I just want real experience working on a team with people who know more than me.</p>
+      </div>
+      <div class="goal-card reveal">
+        <p class="goal-num">— Short term</p>
+        <h3 class="goal-title">Contribute to open source</h3>
+        <p class="goal-desc">Even just fixing a small bug or improving docs somewhere. I want to stop being scared of other people's codebases and just jump in.</p>
+      </div>
+      <div class="goal-card reveal">
+        <p class="goal-num">— Long term</p>
+        <h3 class="goal-title">Build something people use</h3>
+        <p class="goal-desc">A real product — not a tutorial project. Something that solves an actual problem. I don't know what yet, but that's the goal.</p>
+      </div>
+      <div class="goal-card reveal">
+        <p class="goal-num">— Long term</p>
+        <h3 class="goal-title">Explore AI and ML properly</h3>
+        <p class="goal-desc">Really understand what's happening in machine learning, not just use the APIs. I want to go deeper into that world eventually.</p>
+      </div>
+      <div class="goal-card reveal">
+        <p class="goal-num">— Always</p>
+        <h3 class="goal-title">Keep learning</h3>
+        <p class="goal-desc">Tech moves fast. The people I look up to all say the same thing — stay curious, keep building, never think you've figured it all out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-layout">
+      <div class="contact-left reveal">
+        <span class="section-label">Get in touch</span>
+        <h2 class="section-title">Say hello</h2>
+        <p>I'm always happy to talk — whether you're a fellow student, a developer with advice, or someone who just wants to connect. I read every message.</p>
+        <ul class="contact-links">
+          <li>
+            <span class="contact-link-label">Email</span>
+            <a href="mailto:ranaahmadali1704@gmail.com">ranaahmadali1704@gmail.com</a>
+          </li>
+          <li>
+            <span class="contact-link-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/ahmad-ali-485161286" target="_blank">Ahmad Ali</a>
+          </li>
+          <li>
+            <span class="contact-link-label">GitHub</span>
+            <a href="#" target="_blank">github.com/ahmad-ali</a>
+          </li>
+          <li>
+            <span class="contact-link-label">Location</span>
+            <span style="color: var(--gray);">Gujranwala, Pakistan</span>
+          </li>
+        </ul>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Your name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" placeholder="your@email.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Subject</label>
+          <input type="text" placeholder="What's up?">
+        </div>
+        <div class="form-row">
+          <label>Message</label>
+          <textarea placeholder="Write something..."></textarea>
+        </div>
+        <button class="btn-submit">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">ahmad.dev</span>
+  <span class="footer-note">Built by Ahmad Ali · 2025</span>
+  <div class="footer-socials">
+    <a href="https://www.linkedin.com/in/ahmad-ali-485161286" target="_blank">LinkedIn</a>
+    <a href="#" target="_blank">GitHub</a>
+    <a href="mailto:ranaahmadali1704@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+// NAV
+const navbar = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  });
+});
+
+// REVEAL
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('.skill-fill').forEach(f => {
+        f.style.width = f.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// SKILL BARS
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(f => {
+        f.style.width = f.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.skills-layout').forEach(el => skillObserver.observe(el));
+
+// TIMELINE
+const tlObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.tl-item').forEach(el => tlObserver.observe(el));
+
+// COUNTERS
+function animateCount(el, target) {
+  let n = 0;
+  const step = target / 50;
+  const t = setInterval(() => {
+    n += step;
+    if (n >= target) { el.textContent = target + '+'; clearInterval(t); }
+    else el.textContent = Math.floor(n);
+  }, 28);
+}
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-target]').forEach(el => {
+        animateCount(el, parseInt(el.dataset.target));
+      });
+      countObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.about-counters').forEach(el => countObserver.observe(el));
+</script>
+</body>
+</html>
